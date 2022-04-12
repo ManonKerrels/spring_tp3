@@ -6,6 +6,7 @@ import com.example.spring_tp3.models.entities.Game;
 import com.example.spring_tp3.repository.DeveloperRepository;
 import com.example.spring_tp3.repository.EditorRepository;
 import com.example.spring_tp3.repository.GameRepository;
+import org.h2.engine.User;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
@@ -26,19 +27,12 @@ public class DatabaseFiller implements InitializingBean {
 
 
     @Override
-    public void afterPropertiesSet() throws Exception {}
+    public void afterPropertiesSet() throws Exception {
+        setUpListGame();
+    }
 
 
     private void setUpListGame() throws Exception{
-        Game g = Game.builder()
-                .title("Ocarina of Time")
-                .releaseDate(LocalDate.of(1998, 11, 21))
-                .genre("RPG action-adventure")
-                .getLicence(true)
-                .developer(null)
-                .editor(null)
-                .build();
-        gameRepository.save(g);
 
         Developer d = Developer.builder()
                 .name("Nintendo")
@@ -48,13 +42,21 @@ public class DatabaseFiller implements InitializingBean {
                 .build();
         developerRepository.save(d);
 
-        g = Game.builder()
-                .title("The last of us")
-                .releaseDate(LocalDate.of(2013, 6, 14))
-                .genre("survival horror")
+        Editor e = Editor.builder()
+                .name("Nintendo")
+                .parentCompany("Kyoto")
+                .creationDate(LocalDate.of(1989, 9, 23))
+                .list(null)
+                .build();
+        editorRepository.save(e);
+
+        Game g = Game.builder()
+                .title("Ocarina of Time")
+                .releaseDate(LocalDate.of(1998, 11, 21))
+                .genre("RPG action-adventure")
                 .getLicence(true)
-                .developer(null)
-                .editor(null)
+                .developer(d)
+                .editor(e)
                 .build();
         gameRepository.save(g);
 
@@ -66,13 +68,24 @@ public class DatabaseFiller implements InitializingBean {
                 .build();
         developerRepository.save(d);
 
-        Editor e = Editor.builder()
+        e = Editor.builder()
                 .name("Sony")
                 .parentCompany("Tokyo")
                 .creationDate(LocalDate.of(1946, 5, 7))
                 .list(null)
                 .build();
         editorRepository.save(e);
+
+        g = Game.builder()
+                .title("The last of us")
+                .releaseDate(LocalDate.of(2013, 6, 14))
+                .genre("survival horror")
+                .getLicence(true)
+                .developer(d)
+                .editor(e)
+                .build();
+        gameRepository.save(g);
+
     }
 
 }

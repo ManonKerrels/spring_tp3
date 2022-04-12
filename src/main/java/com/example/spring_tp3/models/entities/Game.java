@@ -31,11 +31,11 @@ public class Game {
     private boolean getLicence;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn
     private Editor editor;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn
     private Developer developer;
 
 }
