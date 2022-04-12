@@ -36,7 +36,7 @@ public class DatabaseFiller implements InitializingBean {
 
         Developer d = Developer.builder()
                 .name("Nintendo")
-                .parentCompany("Kyoto")
+                .parentCompany("Kyoto (Japan)")
                 .creationDate(LocalDate.of(1989, 9, 23))
                 .games(null)
                 .build();
@@ -44,7 +44,7 @@ public class DatabaseFiller implements InitializingBean {
 
         Editor e = Editor.builder()
                 .name("Nintendo")
-                .parentCompany("Kyoto")
+                .parentCompany("Kyoto (Japan)")
                 .creationDate(LocalDate.of(1989, 9, 23))
                 .games(null)
                 .build();
@@ -63,7 +63,7 @@ public class DatabaseFiller implements InitializingBean {
 
         d = Developer.builder()
                 .name("Naughty Dog")
-                .parentCompany("Virginia")
+                .parentCompany("Virginia (United States)")
                 .creationDate(LocalDate.of(1984, 9, 27))
                 .games(null)
                 .build();
@@ -71,7 +71,7 @@ public class DatabaseFiller implements InitializingBean {
 
         e = Editor.builder()
                 .name("Sony")
-                .parentCompany("Tokyo")
+                .parentCompany("Tokyo (Japan)")
                 .creationDate(LocalDate.of(1946, 5, 7))
                 .games(null)
                 .build();
