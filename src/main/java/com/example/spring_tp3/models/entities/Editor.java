@@ -20,7 +20,7 @@ public class Editor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private int id;
+    private Long id;
 
     @Column(name = "name", nullable = false, length = 50)
     private String name;
@@ -32,6 +32,6 @@ public class Editor {
     private LocalDate creationDate;
 
     @OneToMany(mappedBy = "editor")
-    private List<Game> list = new ArrayList<>();
+    private List<Game> games = new ArrayList<>();
 
 }

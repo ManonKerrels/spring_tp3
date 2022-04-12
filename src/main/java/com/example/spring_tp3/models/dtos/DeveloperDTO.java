@@ -1,5 +1,6 @@
 package com.example.spring_tp3.models.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,16 +10,16 @@ import java.time.LocalDate;
 @Builder
 public class DeveloperDTO {
 
-    private int id;
+    private Long id;
     private String name;
     private String parentCompany;
     private LocalDate creationDate;
     private GameDTO game;
 
     @Data
-    @Builder
+    @AllArgsConstructor
     public static class GameDTO{
-        private int id;
+        private Long id;
         private String title;
     }
 

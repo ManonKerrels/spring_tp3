@@ -1,6 +1,5 @@
 package com.example.spring_tp3.models.forms;
 
-import com.example.spring_tp3.models.dtos.GameDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,8 +15,8 @@ public class GameForm {
     private LocalDate releaseDate;
     private String genre;
     private boolean getLicence;
-    private GameDTO.DeveloperDTO developerDTO;
-    private GameDTO.EditorDTO editorDTO;
+    private DeveloperDTO developerDTO;
+    private EditorDTO editorDTO;
 
     @Data
     @AllArgsConstructor

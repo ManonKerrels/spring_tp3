@@ -1,6 +1,5 @@
 package com.example.spring_tp3.models.forms;
 
-import com.example.spring_tp3.models.dtos.EditorDTO;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,16 +9,16 @@ import java.time.LocalDate;
 @Builder
 public class EditorForm {
 
-    private int id;
+    private Long id;
     private String name;
     private String parentCompany;
     private LocalDate creationDate;
-    private EditorDTO.GameDTO game;
+    private GameDTO game;
 
     @Data
     @Builder
     public static class GameDTO{
-        private int id;
+        private Long id;
         private String title;
     }
 }

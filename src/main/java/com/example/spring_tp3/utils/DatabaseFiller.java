@@ -38,7 +38,7 @@ public class DatabaseFiller implements InitializingBean {
                 .name("Nintendo")
                 .parentCompany("Kyoto")
                 .creationDate(LocalDate.of(1989, 9, 23))
-                .list(null)
+                .games(null)
                 .build();
         developerRepository.save(d);
 
@@ -46,7 +46,7 @@ public class DatabaseFiller implements InitializingBean {
                 .name("Nintendo")
                 .parentCompany("Kyoto")
                 .creationDate(LocalDate.of(1989, 9, 23))
-                .list(null)
+                .games(null)
                 .build();
         editorRepository.save(e);
 
@@ -64,7 +64,7 @@ public class DatabaseFiller implements InitializingBean {
                 .name("Naughty Dog")
                 .parentCompany("Virginia")
                 .creationDate(LocalDate.of(1984, 9, 27))
-                .list(null)
+                .games(null)
                 .build();
         developerRepository.save(d);
 
@@ -72,7 +72,7 @@ public class DatabaseFiller implements InitializingBean {
                 .name("Sony")
                 .parentCompany("Tokyo")
                 .creationDate(LocalDate.of(1946, 5, 7))
-                .list(null)
+                .games(null)
                 .build();
         editorRepository.save(e);
 

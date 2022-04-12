@@ -13,12 +13,14 @@ public class DeveloperMapper {
             return null;
         }
 
+//        Game gameEntity = (Game) entity.getGames();
+//        DeveloperDTO.GameDTO game = gameEntity == null ? null : new DeveloperDTO.GameDTO(gameEntity.getId(), gameEntity.getTitle());
+
         return DeveloperDTO.builder()
                 .id(entity.getId())
                 .name(entity.getName())
                 .parentCompany(entity.getParentCompany())
                 .creationDate(entity.getCreationDate())
-                .game((DeveloperDTO.GameDTO) entity.getList())
                 .build();
     }
 

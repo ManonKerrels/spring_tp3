@@ -21,14 +21,14 @@ public class GameDTO {
     @Data
     @AllArgsConstructor
     public static class DeveloperDTO{
-        private int id;
+        private Long id;
         private String name;
     }
 
     @Data
     @AllArgsConstructor
     public static class EditorDTO{
-        private int id;
+        private Long id;
         private String name;
     }
 

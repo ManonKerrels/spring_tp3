@@ -2,6 +2,7 @@ package com.example.spring_tp3.metier.mapper;
 
 import com.example.spring_tp3.models.dtos.EditorDTO;
 import com.example.spring_tp3.models.entities.Editor;
+import com.example.spring_tp3.models.entities.Game;
 import com.example.spring_tp3.models.forms.EditorForm;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +14,14 @@ public class EditorMapper {
             return null;
         }
 
+//        Game gameEntity = (Game) entity.getGames();
+//        EditorDTO.GameDTO game = gameEntity == null ? null : new EditorDTO.GameDTO(gameEntity.getId(), gameEntity.getTitle());
+
         return EditorDTO.builder()
                 .id(entity.getId())
                 .name(entity.getName())
                 .parentCompany(entity.getParentCompany())
                 .creationDate(entity.getCreationDate())
-                .game((EditorDTO.GameDTO) entity.getList())
                 .build();
     }
 

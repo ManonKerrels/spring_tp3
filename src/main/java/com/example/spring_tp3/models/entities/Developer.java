@@ -19,7 +19,7 @@ public class Developer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private int id;
+    private Long id;
 
     @Column(name = "name", nullable = false, length = 50)
     private String name;
@@ -31,6 +31,6 @@ public class Developer {
     private LocalDate creationDate;
 
     @OneToMany(mappedBy = "developer")
-    private List<Game> list = new ArrayList<>();
+    private List<Game> games = new ArrayList<>();
 
 }
