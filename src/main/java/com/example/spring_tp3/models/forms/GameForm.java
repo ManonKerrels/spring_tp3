@@ -14,6 +14,7 @@ public class GameForm {
     private String title;
     private LocalDate releaseDate;
     private String genre;
+    private String portage;
     private boolean getLicence;
     private DeveloperDTO developerDTO;
     private EditorDTO editorDTO;

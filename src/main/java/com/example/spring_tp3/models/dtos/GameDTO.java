@@ -14,6 +14,7 @@ public class GameDTO {
     private String title;
     private LocalDate releaseDate;
     private String genre;
+    private String portage;
     private boolean getLicence;
     private DeveloperDTO developer;
     private EditorDTO editor;

@@ -26,6 +26,7 @@ public class GameMapper {
                 .title(entity.getTitle())
                 .releaseDate(entity.getReleaseDate())
                 .genre(entity.getGenre())
+                .portage(entity.getPortage())
                 .getLicence(entity.isGetLicence())
                 .developer(developer)
                 .editor(editor)
@@ -41,6 +42,7 @@ public class GameMapper {
                 .title(form.getTitle())
                 .releaseDate(form.getReleaseDate())
                 .genre(form.getGenre())
+                .portage(form.getPortage())
                 .getLicence(form.isGetLicence())
                 .build();
     }

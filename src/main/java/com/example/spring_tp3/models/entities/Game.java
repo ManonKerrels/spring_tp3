@@ -27,6 +27,9 @@ public class Game {
     @Column(name = "genre", length = 50)
     private String genre;
 
+    @Column(name = "portage", length = 150)
+    private String portage;
+
     @NonNull
     private boolean getLicence;
 
