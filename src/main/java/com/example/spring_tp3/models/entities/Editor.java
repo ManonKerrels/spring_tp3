@@ -19,19 +19,19 @@ public class Editor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "editor_id", nullable = false)
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "editor_name", nullable = false, length = 50)
     private String name;
 
-    @Column(name = "company", length = 50)
+    @Column(name = "editor_company", length = 50)
     private String parentCompany;
 
-    @Column(name = "creationDate")
+    @Column(name = "editor_creationDate")
     private LocalDate creationDate;
 
-    @OneToMany(mappedBy = "editor")
+    @OneToMany(mappedBy = "editor", cascade = CascadeType.REMOVE)
     private List<Game> games = new ArrayList<>();
 
 }

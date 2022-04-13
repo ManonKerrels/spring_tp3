@@ -9,16 +9,7 @@ import java.time.LocalDate;
 @Builder
 public class EditorForm {
 
-    private Long id;
     private String name;
     private String parentCompany;
     private LocalDate creationDate;
-    private GameDTO game;
-
-    @Data
-    @Builder
-    public static class GameDTO{
-        private Long id;
-        private String title;
-    }
 }

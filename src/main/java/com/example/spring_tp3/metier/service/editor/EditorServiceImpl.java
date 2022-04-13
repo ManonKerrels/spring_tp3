@@ -9,9 +9,11 @@ import com.example.spring_tp3.models.forms.EditorForm;
 import com.example.spring_tp3.repository.EditorRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class EditorServiceImpl implements EditorService{
 
     private final EditorRepository repository;

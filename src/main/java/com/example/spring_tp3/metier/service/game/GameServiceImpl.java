@@ -8,9 +8,11 @@ import com.example.spring_tp3.models.forms.GameForm;
 import com.example.spring_tp3.repository.GameRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class GameServiceImpl implements GameService{
 
     private final GameRepository repository;
@@ -52,6 +54,8 @@ public class GameServiceImpl implements GameService{
         entity.setReleaseDate(form.getReleaseDate());
         entity.setGenre(form.getGenre());
         entity.setGetLicence(form.isGetLicence());
+        entity.setDeveloper(form.getDeveloper());
+        entity.setEditor(form.getEditor());
         entity = repository.save(entity);
         return mapper.entityToDTO(entity);
     }

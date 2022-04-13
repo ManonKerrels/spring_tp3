@@ -9,9 +9,11 @@ import com.example.spring_tp3.models.forms.DeveloperForm;
 import com.example.spring_tp3.repository.DeveloperRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class DeveloperServiceImpl implements DeveloperService{
 
     private final DeveloperRepository repository;
@@ -62,4 +64,7 @@ public class DeveloperServiceImpl implements DeveloperService{
         repository.deleteById(id);
         return dto;
     }
+
+    //updateGame + nouveau form
+    //insertGame + nouveau form
 }

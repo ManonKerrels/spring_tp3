@@ -1,9 +1,15 @@
 package com.example.spring_tp3.metier.mapper;
 
 import com.example.spring_tp3.models.dtos.DeveloperDTO;
+import com.example.spring_tp3.models.dtos.GameDTO;
 import com.example.spring_tp3.models.entities.Developer;
+import com.example.spring_tp3.models.entities.Game;
 import com.example.spring_tp3.models.forms.DeveloperForm;
 import org.springframework.stereotype.Service;
+
+import javax.swing.text.html.parser.Entity;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class DeveloperMapper {
@@ -13,14 +19,12 @@ public class DeveloperMapper {
             return null;
         }
 
-//        Game gameEntity = (Game) entity.getGames();
-//        DeveloperDTO.GameDTO game = gameEntity == null ? null : new DeveloperDTO.GameDTO(gameEntity.getId(), gameEntity.getTitle());
-
         return DeveloperDTO.builder()
                 .id(entity.getId())
                 .name(entity.getName())
                 .parentCompany(entity.getParentCompany())
                 .creationDate(entity.getCreationDate())
+                .game(entity.getGames() == null ? null : entity.getGames().stream().map(DeveloperDTO.GameDTO::of).toList())
                 .build();
     }
 
@@ -30,7 +34,6 @@ public class DeveloperMapper {
         }
 
         return Developer.builder()
-                .id(form.getId())
                 .name(form.getName())
                 .parentCompany(form.getParentCompany())
                 .creationDate(form.getCreationDate())

@@ -1,5 +1,6 @@
 package com.example.spring_tp3.metier.mapper;
 
+import com.example.spring_tp3.models.dtos.DeveloperDTO;
 import com.example.spring_tp3.models.dtos.EditorDTO;
 import com.example.spring_tp3.models.entities.Editor;
 import com.example.spring_tp3.models.entities.Game;
@@ -14,14 +15,12 @@ public class EditorMapper {
             return null;
         }
 
-//        Game gameEntity = (Game) entity.getGames();
-//        EditorDTO.GameDTO game = gameEntity == null ? null : new EditorDTO.GameDTO(gameEntity.getId(), gameEntity.getTitle());
-
         return EditorDTO.builder()
                 .id(entity.getId())
                 .name(entity.getName())
                 .parentCompany(entity.getParentCompany())
                 .creationDate(entity.getCreationDate())
+                .game(entity.getGames() == null ? null : entity.getGames().stream().map(EditorDTO.GameDTO::of).toList())
                 .build();
     }
 
@@ -31,7 +30,6 @@ public class EditorMapper {
         }
 
         return Editor.builder()
-                .id(form.getId())
                 .name(form.getName())
                 .parentCompany(form.getParentCompany())
                 .creationDate(form.getCreationDate())

@@ -18,19 +18,19 @@ public class Developer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "developer_id", nullable = false)
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "developer_name", nullable = false, length = 50)
     private String name;
 
-    @Column(name = "company", length = 50)
+    @Column(name = "developer_company", length = 50)
     private String parentCompany;
 
-    @Column(name = "creationDate")
+    @Column(name = "developer_creationDate")
     private LocalDate creationDate;
 
-    @OneToMany(mappedBy = "developer")
+    @OneToMany(mappedBy = "developer", cascade = CascadeType.REFRESH, orphanRemoval = true)
     private List<Game> games = new ArrayList<>();
 
 }
