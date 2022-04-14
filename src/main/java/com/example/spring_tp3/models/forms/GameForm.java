@@ -11,13 +11,13 @@ import java.time.LocalDate;
 @Builder
 public class GameForm {
 
-    private Long id;
+//    private Long id;
     private String title;
     private LocalDate releaseDate;
     private String genre;
     private String portage;
     private boolean getLicence;
-    private Developer developer;
-    private Editor editor;
+//    private Developer developer;
+//    private Editor editor;
 
 }

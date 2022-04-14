@@ -54,8 +54,8 @@ public class GameServiceImpl implements GameService{
         entity.setReleaseDate(form.getReleaseDate());
         entity.setGenre(form.getGenre());
         entity.setGetLicence(form.isGetLicence());
-        entity.setDeveloper(form.getDeveloper());
-        entity.setEditor(form.getEditor());
+//        entity.setDeveloper(form.getDeveloper());
+//        entity.setEditor(form.getEditor());
         entity = repository.save(entity);
         return mapper.entityToDTO(entity);
     }
