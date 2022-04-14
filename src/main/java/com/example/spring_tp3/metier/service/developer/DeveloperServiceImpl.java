@@ -7,6 +7,7 @@ import com.example.spring_tp3.models.entities.Developer;
 import com.example.spring_tp3.models.entities.Game;
 import com.example.spring_tp3.models.forms.DeveloperForm;
 import com.example.spring_tp3.repository.DeveloperRepository;
+import com.example.spring_tp3.repository.GameRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,10 +19,12 @@ public class DeveloperServiceImpl implements DeveloperService{
 
     private final DeveloperRepository repository;
     private final DeveloperMapper mapper;
+    private final GameRepository gameRepository;
 
-    public DeveloperServiceImpl(DeveloperRepository repository, DeveloperMapper mapper) {
+    public DeveloperServiceImpl(DeveloperRepository repository, DeveloperMapper mapper, GameRepository gameRepository) {
         this.repository = repository;
         this.mapper = mapper;
+        this.gameRepository = gameRepository;
     }
 
     @Override
@@ -35,7 +38,7 @@ public class DeveloperServiceImpl implements DeveloperService{
     public DeveloperDTO getOne(Long id) {
         DeveloperDTO dto = repository.findById(id)
                 .map(mapper::entityToDTO)
-                .orElseThrow(() -> new ElementNotFoundException(id, Game.class));
+                .orElseThrow(() -> new ElementNotFoundException(id, Developer.class));
         return dto;
     }
 
@@ -50,7 +53,7 @@ public class DeveloperServiceImpl implements DeveloperService{
     @Override
     public DeveloperDTO update(Long id, DeveloperForm form) {
         Developer entity = repository.findById(id)
-                .orElseThrow(() -> new ElementNotFoundException(id, Game.class));
+                .orElseThrow(() -> new ElementNotFoundException(id, Developer.class));
         entity.setName(form.getName());
         entity.setParentCompany(form.getParentCompany());
         entity.setCreationDate(form.getCreationDate());
@@ -60,10 +63,18 @@ public class DeveloperServiceImpl implements DeveloperService{
 
     @Override
     public DeveloperDTO delete(Long id) {
+        Developer entity = repository.findById(id)
+                .orElseThrow(() -> new ElementNotFoundException(id, Developer.class));
+        for (Game game : entity.getGames()){
+            game.setDeveloper(null);
+            gameRepository.save(game);
+        }
         DeveloperDTO dto = getOne(id);
         repository.deleteById(id);
         return dto;
+
     }
+
 
     //updateGame + nouveau form
     //insertGame + nouveau form

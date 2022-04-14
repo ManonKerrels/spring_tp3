@@ -31,7 +31,7 @@ public class Editor {
     @Column(name = "editor_creationDate")
     private LocalDate creationDate;
 
-    @OneToMany(mappedBy = "editor", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "editor", cascade = CascadeType.REFRESH)
     private List<Game> games = new ArrayList<>();
 
 }

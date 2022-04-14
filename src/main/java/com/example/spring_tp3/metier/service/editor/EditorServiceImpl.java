@@ -7,6 +7,7 @@ import com.example.spring_tp3.models.entities.Editor;
 import com.example.spring_tp3.models.entities.Game;
 import com.example.spring_tp3.models.forms.EditorForm;
 import com.example.spring_tp3.repository.EditorRepository;
+import com.example.spring_tp3.repository.GameRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,10 +19,12 @@ public class EditorServiceImpl implements EditorService{
 
     private final EditorRepository repository;
     private final EditorMapper mapper;
+    private final GameRepository gameRepository;
 
-    public EditorServiceImpl(EditorRepository repository, EditorMapper mapper) {
+    public EditorServiceImpl(EditorRepository repository, EditorMapper mapper, GameRepository gameRepository) {
         this.repository = repository;
         this.mapper = mapper;
+        this.gameRepository = gameRepository;
     }
 
     @Override
@@ -35,7 +38,7 @@ public class EditorServiceImpl implements EditorService{
     public EditorDTO getOne(Long id) {
         EditorDTO dto = repository.findById(id)
                 .map(mapper::entityToDTO)
-                .orElseThrow(() -> new ElementNotFoundException(id, Game.class));
+                .orElseThrow(() -> new ElementNotFoundException(id, Editor.class));
         return dto;
     }
 
@@ -50,7 +53,7 @@ public class EditorServiceImpl implements EditorService{
     @Override
     public EditorDTO update(Long id, EditorForm form) {
         Editor entity = repository.findById(id)
-                .orElseThrow(() -> new ElementNotFoundException(id, Game.class));
+                .orElseThrow(() -> new ElementNotFoundException(id, Editor.class));
         entity.setName(form.getName());
         entity.setCreationDate(form.getCreationDate());
         entity.setParentCompany(form.getParentCompany());
@@ -60,6 +63,12 @@ public class EditorServiceImpl implements EditorService{
 
     @Override
     public EditorDTO delete(Long id) {
+        Editor entity = repository.findById(id)
+                .orElseThrow(() -> new ElementNotFoundException(id, Editor.class));
+        for (Game game : entity.getGames()){
+            game.setEditor(null);
+            gameRepository.save(game);
+        }
         EditorDTO dto = getOne(id);
         repository.deleteById(id);
         return dto;

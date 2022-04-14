@@ -30,7 +30,7 @@ public class Developer {
     @Column(name = "developer_creationDate")
     private LocalDate creationDate;
 
-    @OneToMany(mappedBy = "developer", cascade = CascadeType.REFRESH, orphanRemoval = true)
+    @OneToMany(mappedBy = "developer", cascade = CascadeType.REFRESH)
     private List<Game> games = new ArrayList<>();
 
 }

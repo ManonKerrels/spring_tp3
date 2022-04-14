@@ -1,9 +1,7 @@
 package com.example.spring_tp3.metier.mapper;
 
-import com.example.spring_tp3.models.dtos.DeveloperDTO;
 import com.example.spring_tp3.models.dtos.EditorDTO;
 import com.example.spring_tp3.models.entities.Editor;
-import com.example.spring_tp3.models.entities.Game;
 import com.example.spring_tp3.models.forms.EditorForm;
 import org.springframework.stereotype.Service;
 

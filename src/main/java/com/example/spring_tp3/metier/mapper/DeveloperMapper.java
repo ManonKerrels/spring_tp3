@@ -1,15 +1,10 @@
 package com.example.spring_tp3.metier.mapper;
 
 import com.example.spring_tp3.models.dtos.DeveloperDTO;
-import com.example.spring_tp3.models.dtos.GameDTO;
 import com.example.spring_tp3.models.entities.Developer;
-import com.example.spring_tp3.models.entities.Game;
 import com.example.spring_tp3.models.forms.DeveloperForm;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.parser.Entity;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class DeveloperMapper {

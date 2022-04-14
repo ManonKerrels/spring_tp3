@@ -19,7 +19,7 @@ public class GameMapper {
         GameDTO.DeveloperDTO developer = developerEntity == null ? null : new GameDTO.DeveloperDTO(developerEntity.getId(), developerEntity.getName());
 
         Editor editorEntity = entity.getEditor();
-        GameDTO.EditorDTO editor = developerEntity == null ? null : new GameDTO.EditorDTO(editorEntity.getId(), editorEntity.getName());
+        GameDTO.EditorDTO editor = editorEntity == null ? null : new GameDTO.EditorDTO(editorEntity.getId(), editorEntity.getName());
 
         return GameDTO.builder()
                 .id(entity.getId())
