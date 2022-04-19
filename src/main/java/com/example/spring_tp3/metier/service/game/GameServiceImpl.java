@@ -3,8 +3,10 @@ package com.example.spring_tp3.metier.service.game;
 import com.example.spring_tp3.exceptions.ElementNotFoundException;
 import com.example.spring_tp3.metier.mapper.GameMapper;
 import com.example.spring_tp3.models.dtos.GameDTO;
+import com.example.spring_tp3.models.entities.Developer;
 import com.example.spring_tp3.models.entities.Game;
 import com.example.spring_tp3.models.forms.GameForm;
+import com.example.spring_tp3.repository.DeveloperRepository;
 import com.example.spring_tp3.repository.GameRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +19,12 @@ public class GameServiceImpl implements GameService{
 
     private final GameRepository repository;
     private final GameMapper mapper;
+    private final DeveloperRepository developerRepository;
 
-    public GameServiceImpl(GameRepository repository, GameMapper mapper) {
+    public GameServiceImpl(GameRepository repository, GameMapper mapper, DeveloperRepository developerRepository) {
         this.repository = repository;
         this.mapper = mapper;
+        this.developerRepository = developerRepository;
     }
 
     @Override
@@ -65,5 +69,15 @@ public class GameServiceImpl implements GameService{
         GameDTO dto = getOne(id);
         repository.deleteById(id);
         return dto;
+    }
+
+    @Override
+    public GameDTO updateDeveloper(Long id, Long idDeveloper) {
+        Game game = repository.findById(id)
+                .orElseThrow(() -> new ElementNotFoundException(id, Game.class));
+        Developer developer = developerRepository.findById(idDeveloper)
+                .orElseThrow(() -> new ElementNotFoundException(idDeveloper, Developer.class));
+        game.setDeveloper(developer);
+        return mapper.entityToDTO(game);
     }
 }

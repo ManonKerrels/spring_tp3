@@ -58,4 +58,11 @@ public class GameController {
         return ResponseEntity.ok(service.delete(id));
     }
 
+
+    // --- UPDATE DEVELOPER ---
+    @PutMapping("/update/{id}/{idDeveloper}")
+    public ResponseEntity<GameDTO> updateDeveloper(@PathVariable Long id, @PathVariable Long idDeveloper){
+        return ResponseEntity.ok(service.updateDeveloper(id, idDeveloper));
+    }
+
 }

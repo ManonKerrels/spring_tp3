@@ -88,6 +88,14 @@ public class DatabaseFiller implements InitializingBean {
                 .build();
         gameRepository.save(g);
 
+        d = Developer.builder()
+                .name("Capcom")
+                .parentCompany("Osaka (Japan)")
+                .creationDate(LocalDate.of(1979, 5, 30))
+                .games(null)
+                .build();
+        developerRepository.save(d);
+
     }
 
 }
