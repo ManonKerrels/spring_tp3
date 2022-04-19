@@ -1,7 +1,6 @@
 package com.example.spring_tp3.models.forms;
 
-import com.example.spring_tp3.models.entities.Developer;
-import com.example.spring_tp3.models.entities.Editor;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,13 +10,26 @@ import java.time.LocalDate;
 @Builder
 public class GameForm {
 
-//    private Long id;
     private String title;
     private LocalDate releaseDate;
     private String genre;
     private String portage;
     private boolean getLicence;
-//    private Developer developer;
-//    private Editor editor;
+    private DeveloperDTO developer;
+    private EditorDTO editor;
+
+    @Data
+    @AllArgsConstructor
+    public static class DeveloperDTO {
+        private Long id;
+        private String name;
+    }
+
+    @Data
+    @AllArgsConstructor
+    public static class EditorDTO {
+        private Long id;
+        private String name;
+    }
 
 }

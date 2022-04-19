@@ -37,6 +37,7 @@ public class GameMapper {
         if (form == null){
             return null;
         }
+
         return Game.builder()
                 .title(form.getTitle())
                 .releaseDate(form.getReleaseDate())

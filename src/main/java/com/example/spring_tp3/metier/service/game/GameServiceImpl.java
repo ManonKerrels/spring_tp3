@@ -1,12 +1,16 @@
 package com.example.spring_tp3.metier.service.game;
 
 import com.example.spring_tp3.exceptions.ElementNotFoundException;
+import com.example.spring_tp3.metier.mapper.DeveloperMapper;
+import com.example.spring_tp3.metier.mapper.EditorMapper;
 import com.example.spring_tp3.metier.mapper.GameMapper;
 import com.example.spring_tp3.models.dtos.GameDTO;
 import com.example.spring_tp3.models.entities.Developer;
+import com.example.spring_tp3.models.entities.Editor;
 import com.example.spring_tp3.models.entities.Game;
 import com.example.spring_tp3.models.forms.GameForm;
 import com.example.spring_tp3.repository.DeveloperRepository;
+import com.example.spring_tp3.repository.EditorRepository;
 import com.example.spring_tp3.repository.GameRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,16 +24,29 @@ public class GameServiceImpl implements GameService{
     private final GameRepository repository;
     private final GameMapper mapper;
     private final DeveloperRepository developerRepository;
+    private final DeveloperMapper developerMapper;
+    private final EditorRepository editorRepository;
+    private final EditorMapper editorMapper;
 
-    public GameServiceImpl(GameRepository repository, GameMapper mapper, DeveloperRepository developerRepository) {
+    public GameServiceImpl(GameRepository repository, GameMapper mapper, DeveloperRepository developerRepository, DeveloperMapper developerMapper, EditorRepository editorRepository, EditorMapper editorMapper) {
         this.repository = repository;
         this.mapper = mapper;
         this.developerRepository = developerRepository;
+        this.developerMapper = developerMapper;
+        this.editorRepository = editorRepository;
+        this.editorMapper = editorMapper;
     }
 
     @Override
     public GameDTO insert(GameForm form) {
         Game entity = mapper.formToEntity(form);
+        // setup le developer et l'editeur
+
+        Developer developer = mapper.formToEntity(form.setDeveloper(GameForm));
+        developer = developerRepository.save(developer);
+        Editor editor = mapper.formToEntity(form.setEditor(GameForm.EditorDTO));
+        editor = editorRepository.save(editor);
+
         entity = repository.save(entity);
         return mapper.entityToDTO(entity);
     }

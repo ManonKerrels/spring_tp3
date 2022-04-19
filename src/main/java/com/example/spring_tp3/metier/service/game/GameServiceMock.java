@@ -32,7 +32,5 @@ public class GameServiceMock implements GameService{
     }
 
     @Override
-    public GameDTO updateDeveloper(Long id, Long idDeveloper) {
-        return null;
-    }
+    public GameDTO updateDeveloper(Long id, Long idDeveloper) { return null; }
 }
