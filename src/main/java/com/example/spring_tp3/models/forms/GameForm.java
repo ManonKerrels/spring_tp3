@@ -1,5 +1,7 @@
 package com.example.spring_tp3.models.forms;
 
+import com.example.spring_tp3.models.entities.Developer;
+import com.example.spring_tp3.models.entities.Editor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,19 +17,19 @@ public class GameForm {
     private String genre;
     private String portage;
     private boolean getLicence;
-    private DeveloperDTO developer;
-    private EditorDTO editor;
+    private Developer developer;
+    private Editor editor;
 
     @Data
     @AllArgsConstructor
-    public static class DeveloperDTO {
+    public static class Developer {
         private Long id;
         private String name;
     }
 
     @Data
     @AllArgsConstructor
-    public static class EditorDTO {
+    public static class Editor {
         private Long id;
         private String name;
     }

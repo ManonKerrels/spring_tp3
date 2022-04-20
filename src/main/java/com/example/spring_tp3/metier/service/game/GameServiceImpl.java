@@ -24,29 +24,19 @@ public class GameServiceImpl implements GameService{
     private final GameRepository repository;
     private final GameMapper mapper;
     private final DeveloperRepository developerRepository;
-    private final DeveloperMapper developerMapper;
     private final EditorRepository editorRepository;
-    private final EditorMapper editorMapper;
 
-    public GameServiceImpl(GameRepository repository, GameMapper mapper, DeveloperRepository developerRepository, DeveloperMapper developerMapper, EditorRepository editorRepository, EditorMapper editorMapper) {
+    public GameServiceImpl(GameRepository repository, GameMapper mapper, DeveloperRepository developerRepository, EditorRepository editorRepository) {
         this.repository = repository;
         this.mapper = mapper;
         this.developerRepository = developerRepository;
-        this.developerMapper = developerMapper;
         this.editorRepository = editorRepository;
-        this.editorMapper = editorMapper;
     }
 
     @Override
     public GameDTO insert(GameForm form) {
         Game entity = mapper.formToEntity(form);
-        // setup le developer et l'editeur
-
-        Developer developer = mapper.formToEntity(form.setDeveloper(GameForm));
-        developer = developerRepository.save(developer);
-        Editor editor = mapper.formToEntity(form.setEditor(GameForm.EditorDTO));
-        editor = editorRepository.save(editor);
-
+        // setup le developer et l'editeur??
         entity = repository.save(entity);
         return mapper.entityToDTO(entity);
     }
