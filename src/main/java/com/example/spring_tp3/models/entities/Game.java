@@ -41,4 +41,8 @@ public class Game {
     @JoinColumn
     private Developer developer;
 
+    @ManyToOne
+    @JoinColumn
+    private User user;
+
 }
