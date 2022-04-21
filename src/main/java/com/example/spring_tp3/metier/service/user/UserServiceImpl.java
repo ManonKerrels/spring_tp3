@@ -5,6 +5,7 @@ import com.example.spring_tp3.metier.mapper.UserMapper;
 import com.example.spring_tp3.models.dtos.UserDTO;
 import com.example.spring_tp3.models.entities.Game;
 import com.example.spring_tp3.models.entities.User;
+import com.example.spring_tp3.models.forms.UserConnectForm;
 import com.example.spring_tp3.models.forms.UserForm;
 import com.example.spring_tp3.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -63,6 +64,15 @@ public class UserServiceImpl implements UserService{
     public UserDTO delete(Long id) {
         UserDTO dto = getOne(id);
         userRepository.deleteById(id);
+        return dto;
+    }
+
+    @Override
+    public UserDTO getByUsername(UserConnectForm form) {
+        System.out.println(form.getUsername());
+        UserDTO dto = userRepository.findByUsername(form.getUsername())
+                .map(userMapper::entityToDTO)
+                .orElseThrow(() -> new ElementNotFoundException(0, User.class));
         return dto;
     }
 }

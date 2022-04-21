@@ -6,9 +6,10 @@ import com.example.spring_tp3.models.entities.Game;
 import com.example.spring_tp3.repository.DeveloperRepository;
 import com.example.spring_tp3.repository.EditorRepository;
 import com.example.spring_tp3.repository.GameRepository;
-import org.h2.engine.User;
+import com.example.spring_tp3.repository.UserRepository;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
+import com.example.spring_tp3.models.entities.User;
 
 import java.time.LocalDate;
 
@@ -18,11 +19,13 @@ public class DatabaseFiller implements InitializingBean {
     private final GameRepository gameRepository;
     private final EditorRepository editorRepository;
     private final DeveloperRepository developerRepository;
+    private final UserRepository userRepository;
 
-    public DatabaseFiller(GameRepository gameRepository, EditorRepository editorRepository, DeveloperRepository developerRepository) {
+    public DatabaseFiller(GameRepository gameRepository, EditorRepository editorRepository, DeveloperRepository developerRepository, UserRepository userRepository) {
         this.gameRepository = gameRepository;
         this.editorRepository = editorRepository;
         this.developerRepository = developerRepository;
+        this.userRepository = userRepository;
     }
 
 
@@ -96,6 +99,12 @@ public class DatabaseFiller implements InitializingBean {
                 .build();
         developerRepository.save(d);
 
+        User u = User.builder()
+                .username("manon")
+                .password("pass")
+                .email("manon@mail.com")
+                .build();
+        userRepository.save(u);
     }
 
 }
