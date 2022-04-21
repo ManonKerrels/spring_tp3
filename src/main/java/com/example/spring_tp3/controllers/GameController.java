@@ -60,9 +60,15 @@ public class GameController {
 
 
     // --- UPDATE DEVELOPER ---
-    @PutMapping("/update/{id}/{idDeveloper}")
+    @PutMapping("/updateDev/{id}/developer/{idDeveloper}")
     public ResponseEntity<GameDTO> updateDeveloper(@PathVariable Long id, @PathVariable Long idDeveloper){
         return ResponseEntity.ok(service.updateDeveloper(id, idDeveloper));
+    }
+
+    // --- UPDATE EDITOR ---
+    @PutMapping("/updateEdit/{id}/editor/{idEditor}")
+    public ResponseEntity<GameDTO> updateEditor(@PathVariable Long id, @PathVariable Long idEditor){
+        return ResponseEntity.ok(service.updateEditor(id, idEditor));
     }
 
 }

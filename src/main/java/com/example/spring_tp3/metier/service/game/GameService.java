@@ -18,4 +18,6 @@ public interface GameService {
     public GameDTO delete(Long id);
 
     public GameDTO updateDeveloper(Long id, Long idDeveloper);
+
+    public GameDTO updateEditor(Long id, Long idEditor);
 }

@@ -36,7 +36,12 @@ public class GameServiceImpl implements GameService{
     @Override
     public GameDTO insert(GameForm form) {
         Game entity = mapper.formToEntity(form);
-        // setup le developer et l'editeur??
+        Developer dev = developerRepository.findById(form.getDeveloper().getId())
+                .orElseThrow(()-> new ElementNotFoundException(form.getDeveloper().getId(), Developer.class));
+        entity.setDeveloper(dev);
+        Editor editor = editorRepository.findById(form.getEditor().getId())
+                .orElseThrow(()-> new ElementNotFoundException(form.getEditor().getId(), Editor.class));
+        entity.setEditor(editor);
         entity = repository.save(entity);
         return mapper.entityToDTO(entity);
     }
@@ -87,4 +92,16 @@ public class GameServiceImpl implements GameService{
         game.setDeveloper(developer);
         return mapper.entityToDTO(game);
     }
+
+    @Override
+    public GameDTO updateEditor(Long id, Long idEditor) {
+        Game game = repository.findById(id)
+                .orElseThrow(() -> new ElementNotFoundException(id, Game.class));
+        Editor editor = editorRepository.findById(idEditor)
+                .orElseThrow(() -> new ElementNotFoundException(idEditor, Editor.class));
+        game.setEditor(editor);
+        return mapper.entityToDTO(game);
+    }
+
+
 }
