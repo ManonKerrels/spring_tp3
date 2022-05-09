@@ -7,6 +7,7 @@ import com.example.spring_tp3.models.entities.Game;
 import com.example.spring_tp3.models.entities.User;
 import com.example.spring_tp3.models.forms.UserConnectForm;
 import com.example.spring_tp3.models.forms.UserForm;
+import com.example.spring_tp3.repository.GameRepository;
 import com.example.spring_tp3.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +20,12 @@ public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final GameRepository gameRepository;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, GameRepository gameRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.gameRepository = gameRepository;
     }
 
     @Override
@@ -74,5 +77,16 @@ public class UserServiceImpl implements UserService{
                 .map(userMapper::entityToDTO)
                 .orElseThrow(() -> new ElementNotFoundException(0, User.class));
         return dto;
+    }
+
+    @Override
+    public UserDTO addGameToFavorites(Long id, Long idGame){
+        User entity = userRepository.findById(id)
+                .orElseThrow(() -> new ElementNotFoundException(id, Game.class));
+        Game game = gameRepository.findById(idGame)
+                .orElseThrow(() -> new ElementNotFoundException(idGame, Game.class));
+        entity.getGames().stream().toList().add(game);
+        entity = userRepository.save(entity);
+        return userMapper.entityToDTO(entity);
     }
 }

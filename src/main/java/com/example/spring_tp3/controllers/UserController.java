@@ -2,9 +2,8 @@ package com.example.spring_tp3.controllers;
 
 import com.example.spring_tp3.exceptions.ElementNotFoundException;
 import com.example.spring_tp3.metier.service.user.UserService;
-import com.example.spring_tp3.models.dtos.GameDTO;
 import com.example.spring_tp3.models.dtos.UserDTO;
-import com.example.spring_tp3.models.forms.GameForm;
+import com.example.spring_tp3.models.entities.User;
 import com.example.spring_tp3.models.forms.UserConnectForm;
 import com.example.spring_tp3.models.forms.UserForm;
 import org.springframework.http.HttpStatus;
@@ -56,5 +55,16 @@ public class UserController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<UserDTO> delete(@PathVariable Long id){
         return ResponseEntity.ok(service.delete(id));
+    }
+
+    // --- ADD GAME TO FAVORITES ---
+    @PutMapping("/update/{id}/fav/{idGame}")
+    public ResponseEntity<UserDTO> addGameToFavorites(@RequestBody UserConnectForm form, @PathVariable Long id, @PathVariable Long idGame){
+        try{
+            UserDTO dto = service.getByUsername(form);
+            return ResponseEntity.ok(service.addGameToFavorites(id, idGame));
+        } catch (ElementNotFoundException ex){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

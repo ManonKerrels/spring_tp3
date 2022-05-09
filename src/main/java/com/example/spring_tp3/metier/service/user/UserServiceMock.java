@@ -36,4 +36,10 @@ public class UserServiceMock implements UserService{
     public UserDTO getByUsername(UserConnectForm form) {
         return null;
     }
+
+    @Override
+    public UserDTO addGameToFavorites(Long id, Long idGame) {
+        return null;
+    }
+
 }

@@ -8,16 +8,17 @@ import java.util.List;
 
 public interface UserService {
 
-    public UserDTO insert(UserForm form);
+    UserDTO insert(UserForm form);
 
-    public UserDTO getOne(Long id);
+    UserDTO getOne(Long id);
 
-    public List<UserDTO> getAll();
+    List<UserDTO> getAll();
 
-    public UserDTO update(Long id, UserForm form);
+    UserDTO update(Long id, UserForm form);
 
-    public UserDTO delete(Long id);
+    UserDTO delete(Long id);
 
     UserDTO getByUsername(UserConnectForm form);
 
+    UserDTO addGameToFavorites(Long id, Long idGame);
 }
