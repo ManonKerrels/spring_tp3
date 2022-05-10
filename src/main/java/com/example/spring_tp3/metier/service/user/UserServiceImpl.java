@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService{
                 .orElseThrow(() -> new ElementNotFoundException(id, Game.class));
         Game game = gameRepository.findById(idGame)
                 .orElseThrow(() -> new ElementNotFoundException(idGame, Game.class));
-        entity.getGames().stream().toList().add(game);
+        entity.getGames().add(game);
         entity = userRepository.save(entity);
         return userMapper.entityToDTO(entity);
     }

@@ -36,7 +36,7 @@ public class User implements UserDetails {
 
     private boolean isNotLocked = true;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH)
+    @ManyToMany
     private List<Game> games = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)

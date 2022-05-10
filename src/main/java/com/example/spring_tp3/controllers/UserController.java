@@ -58,10 +58,9 @@ public class UserController {
     }
 
     // --- ADD GAME TO FAVORITES ---
-    @PutMapping("/update/{id}/fav/{idGame}")
-    public ResponseEntity<UserDTO> addGameToFavorites(@RequestBody UserConnectForm form, @PathVariable Long id, @PathVariable Long idGame){
+    @PatchMapping ("/update/{id}/fav/{idGame}")
+    public ResponseEntity<UserDTO> addGameToFavorites(@PathVariable Long id, @PathVariable Long idGame){
         try{
-            UserDTO dto = service.getByUsername(form);
             return ResponseEntity.ok(service.addGameToFavorites(id, idGame));
         } catch (ElementNotFoundException ex){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

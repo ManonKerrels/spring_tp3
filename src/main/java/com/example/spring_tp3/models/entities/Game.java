@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -41,8 +42,7 @@ public class Game {
     @JoinColumn
     private Developer developer;
 
-    @ManyToOne
-    @JoinColumn
-    private User user;
+    @ManyToMany(mappedBy = "games", cascade = CascadeType.REFRESH)
+    private List<User> user;
 
 }
