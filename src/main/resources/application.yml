@@ -9,3 +9,10 @@ spring:
     console:
       enabled: true
       path: /h2
+
+application:
+  jwt:
+    secret: "I used to be an adventurer like you, then I took an arrow to the knee"
+    expires: 86400000
+    prefix: "Bearer "
+    header: "Authorization"

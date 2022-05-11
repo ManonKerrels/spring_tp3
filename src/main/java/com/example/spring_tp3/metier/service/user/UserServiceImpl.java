@@ -9,6 +9,7 @@ import com.example.spring_tp3.models.forms.UserConnectForm;
 import com.example.spring_tp3.models.forms.UserForm;
 import com.example.spring_tp3.repository.GameRepository;
 import com.example.spring_tp3.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,16 +22,19 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final GameRepository gameRepository;
+    private final PasswordEncoder encoder;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, GameRepository gameRepository) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, GameRepository gameRepository, PasswordEncoder encoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.gameRepository = gameRepository;
+        this.encoder = encoder;
     }
 
     @Override
     public UserDTO insert(UserForm form) {
         User entity = userMapper.formToEntity(form);
+        encoder.encode(form.getPassword());
         entity.setNotLocked(true);
         entity = userRepository.save(entity);
         return userMapper.entityToDTO(entity);

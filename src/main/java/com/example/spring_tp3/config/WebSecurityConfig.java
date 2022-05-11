@@ -40,14 +40,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.httpBasic();
 
-        http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.headers()
-                .frameOptions().disable();
+        http.headers().frameOptions().disable();
 
-        http.authorizeRequests()
-                .anyRequest().permitAll();
+        http.authorizeRequests().anyRequest().permitAll();
 
     }
 }
