@@ -39,7 +39,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                         .verify(token);
 
                 if (jwt.getExpiresAt() != null && jwt.getExpiresAt().after(new Date())){
-                    //on s'assure qu'il y ait une authentication afin que les filtres fassent leur travail convenablement
                     Authentication auth = new UsernamePasswordAuthenticationToken(
                             jwt.getSubject(),
                             "",
@@ -49,7 +48,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                                     .toList()
                     );
 
-                    //mise en place de l'authentication dans le contexte de sécurité avec le token
                     SecurityContextHolder.getContext().setAuthentication(auth);
                 }
 
