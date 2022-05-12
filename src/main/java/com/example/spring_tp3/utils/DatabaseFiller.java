@@ -8,6 +8,7 @@ import com.example.spring_tp3.repository.EditorRepository;
 import com.example.spring_tp3.repository.GameRepository;
 import com.example.spring_tp3.repository.UserRepository;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import com.example.spring_tp3.models.entities.User;
@@ -15,7 +16,7 @@ import com.example.spring_tp3.models.entities.User;
 import java.time.LocalDate;
 import java.util.List;
 
-@Component
+@Configuration
 public class DatabaseFiller implements InitializingBean {
 
     private final GameRepository gameRepository;
@@ -108,6 +109,7 @@ public class DatabaseFiller implements InitializingBean {
                 .password(encoder.encode("pass"))
                 .email("manon@mail.com")
                 .roles(List.of("USER", "ADMIN"))
+                .isNotLocked(true)
                 .build();
         userRepository.save(u);
     }

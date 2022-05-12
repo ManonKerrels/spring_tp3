@@ -1,9 +1,9 @@
 package com.example.spring_tp3.controllers;
 
 import com.example.spring_tp3.exceptions.ElementNotFoundException;
+import com.example.spring_tp3.metier.service.LoginService;
 import com.example.spring_tp3.metier.service.user.UserService;
 import com.example.spring_tp3.models.dtos.UserDTO;
-import com.example.spring_tp3.models.entities.User;
 import com.example.spring_tp3.models.forms.UserConnectForm;
 import com.example.spring_tp3.models.forms.UserForm;
 import org.springframework.http.HttpStatus;
@@ -18,9 +18,11 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
+    private final LoginService loginService;
     private final UserService service;
 
-    public UserController(UserService service) {
+    public UserController(LoginService loginService, UserService service) {
+        this.loginService = loginService;
         this.service = service;
     }
 
@@ -30,11 +32,17 @@ public class UserController {
         return service.getAll();
     }
 
-    // --- GET ONE ---
+    // --- LOGIN ---
     @PostMapping("/login")
-    public ResponseEntity<UserDTO> getOne(@RequestBody UserConnectForm form){
+    public ResponseEntity<String> login(@RequestBody UserConnectForm form){
+        return ResponseEntity.ok(loginService.login(form));
+    }
+
+    // --- GET ONE ---
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> getOne(@PathVariable Long id){
         try {
-            UserDTO dto = service.getByUsername(form);
+            UserDTO dto = service.getOne(id);
             return ResponseEntity.ok(dto);
         } catch (ElementNotFoundException ex){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -56,7 +64,7 @@ public class UserController {
     }
 
     // --- DELETE ---
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     @RolesAllowed("ADMIN")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<UserDTO> delete(@PathVariable Long id){

@@ -19,6 +19,7 @@ public class UserMapper {
                 .username(entity.getUsername())
                 .password(entity.getPassword())
                 .email(entity.getEmail())
+                .roles(entity.getRoles())
                 .games(entity.getGames() == null ? null : entity.getGames().stream().map(UserDTO.GameDTO::of).toList())
                 .build();
     }

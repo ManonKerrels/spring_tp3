@@ -21,4 +21,5 @@ public interface UserService {
     UserDTO getByUsername(UserConnectForm form);
 
     UserDTO addGameToFavorites(Long id, Long idGame);
+
 }

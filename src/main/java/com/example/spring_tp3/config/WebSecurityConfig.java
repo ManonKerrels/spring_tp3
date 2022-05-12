@@ -1,14 +1,16 @@
 package com.example.spring_tp3.config;
 
+import com.example.spring_tp3.security.JWTAuthenticationFilter;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -20,17 +22,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder encoder;
-    private final UserDetailsService userDetailsService;
+    private final JWTProperties properties;
 
-    public WebSecurityConfig(PasswordEncoder encoder, UserDetailsService userDetailsService) {
+    public WebSecurityConfig(PasswordEncoder encoder, JWTProperties properties) {
         this.encoder = encoder;
-        this.userDetailsService = userDetailsService;
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(encoder);
+        this.properties = properties;
     }
 
     @Override
@@ -38,19 +34,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
 
-        http.httpBasic();
+//        http.httpBasic(); //= faire une simple connection sans jwt
 
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); //pour ne pas garder de cookies
 
-        http.headers().frameOptions().disable();
+        http.headers().frameOptions().disable(); //éviter les censures mises par défaut (header)
 
-//        http.authorizeRequests().anyRequest().permitAll();
+        http.authorizeRequests().anyRequest().permitAll();
 
-        http.authorizeRequests()
-                .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/user").hasRole("USER")
-                .anyRequest().authenticated()
-                .and()
-                .formLogin();
+        http.addFilterBefore(new JWTAuthenticationFilter(properties), UsernamePasswordAuthenticationFilter.class);
+
+//        http.authorizeRequests()
+//                .antMatchers("/admin").hasRole("ADMIN")
+//                .antMatchers("/user").hasRole("USER")
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin();
+    }
+
+    @Bean
+    @Override
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
     }
 }

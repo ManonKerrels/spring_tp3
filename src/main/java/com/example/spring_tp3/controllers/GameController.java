@@ -6,6 +6,7 @@ import com.example.spring_tp3.models.dtos.GameDTO;
 import com.example.spring_tp3.models.forms.GameForm;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,7 +57,7 @@ public class GameController {
     }
 
     // --- DELETE ---
-//    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<GameDTO> delete(@PathVariable Long id){
         return ResponseEntity.ok(service.delete(id));

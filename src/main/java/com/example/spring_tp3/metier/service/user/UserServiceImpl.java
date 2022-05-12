@@ -1,5 +1,8 @@
 package com.example.spring_tp3.metier.service.user;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.example.spring_tp3.config.JWTProperties;
 import com.example.spring_tp3.exceptions.ElementNotFoundException;
 import com.example.spring_tp3.metier.mapper.UserMapper;
 import com.example.spring_tp3.models.dtos.UserDTO;
@@ -9,6 +12,10 @@ import com.example.spring_tp3.models.forms.UserConnectForm;
 import com.example.spring_tp3.models.forms.UserForm;
 import com.example.spring_tp3.repository.GameRepository;
 import com.example.spring_tp3.repository.UserRepository;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,7 +27,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -97,10 +104,8 @@ public class UserServiceImpl implements UserService {
         return userMapper.entityToDTO(entity);
     }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        return (UserDetails) userRepository.findByUsername(username)
-//                .map(UserDTO::of)
-//                .orElseThrow(() -> new UsernameNotFoundException("L'utilisateur n'existe pas"));
-//    }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username).orElseThrow(() -> new ElementNotFoundException(username, User.class));
+    }
 }
