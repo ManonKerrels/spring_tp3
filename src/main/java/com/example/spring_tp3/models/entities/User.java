@@ -1,9 +1,13 @@
 package com.example.spring_tp3.models.entities;
 
+import com.example.spring_tp3.repository.UserRepository;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsChecker;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 
 import javax.persistence.*;
@@ -12,8 +16,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Builder
-@Getter
-@Setter
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -40,7 +43,7 @@ public class User implements UserDetails {
     private List<Game> games = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
-    List<String> roles;
+    private List<String> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -60,4 +63,5 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() { return isNotLocked; }
+
 }

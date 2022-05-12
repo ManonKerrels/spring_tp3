@@ -8,10 +8,12 @@ import com.example.spring_tp3.repository.EditorRepository;
 import com.example.spring_tp3.repository.GameRepository;
 import com.example.spring_tp3.repository.UserRepository;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import com.example.spring_tp3.models.entities.User;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Component
 public class DatabaseFiller implements InitializingBean {
@@ -20,12 +22,14 @@ public class DatabaseFiller implements InitializingBean {
     private final EditorRepository editorRepository;
     private final DeveloperRepository developerRepository;
     private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
-    public DatabaseFiller(GameRepository gameRepository, EditorRepository editorRepository, DeveloperRepository developerRepository, UserRepository userRepository) {
+    public DatabaseFiller(GameRepository gameRepository, EditorRepository editorRepository, DeveloperRepository developerRepository, UserRepository userRepository, PasswordEncoder encoder) {
         this.gameRepository = gameRepository;
         this.editorRepository = editorRepository;
         this.developerRepository = developerRepository;
         this.userRepository = userRepository;
+        this.encoder = encoder;
     }
 
 
@@ -101,8 +105,9 @@ public class DatabaseFiller implements InitializingBean {
 
         User u = User.builder()
                 .username("manon")
-                .password("pass")
+                .password(encoder.encode("pass"))
                 .email("manon@mail.com")
+                .roles(List.of("USER", "ADMIN"))
                 .build();
         userRepository.save(u);
     }

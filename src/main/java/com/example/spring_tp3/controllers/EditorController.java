@@ -6,6 +6,7 @@ import com.example.spring_tp3.models.dtos.EditorDTO;
 import com.example.spring_tp3.models.forms.EditorForm;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,18 +38,21 @@ public class EditorController {
     }
 
     // --- INSERT ---
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/insert")
     public ResponseEntity<EditorDTO> insert(@RequestBody EditorForm form){
         return ResponseEntity.ok(service.insert(form));
     }
 
     // --- UPDATE ---
+    @PreAuthorize("isAuthenticated()")
     @PutMapping("/update/{id}")
     public ResponseEntity<EditorDTO> update(@RequestBody EditorForm form, @PathVariable Long id){
         return ResponseEntity.ok(service.update(id, form));
     }
 
     // --- DELETE ---
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<EditorDTO> delete(@PathVariable Long id){
         return ResponseEntity.ok(service.delete(id));

@@ -1,7 +1,7 @@
 package com.example.spring_tp3.models.dtos;
 
 import com.example.spring_tp3.models.entities.Game;
-import com.example.spring_tp3.models.forms.UserForm;
+import com.example.spring_tp3.models.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +16,19 @@ public class UserDTO {
     private String username;
     private String password;
     private String email;
+    private List<String> roles;
     private List<GameDTO> games;
+
+    public static UserDTO of(User entity){
+        if ( entity == null)
+            return null;
+
+        return UserDTO.builder()
+                .username(entity.getUsername())
+                .password(entity.getPassword())
+                .roles(entity.getRoles())
+                .build();
+    }
 
     @Data
     @AllArgsConstructor

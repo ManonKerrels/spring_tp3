@@ -16,3 +16,6 @@ application:
     expires: 86400000
     prefix: "Bearer "
     header: "Authorization"
+
+server:
+  port: 8585

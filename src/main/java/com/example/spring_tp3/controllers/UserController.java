@@ -8,8 +8,10 @@ import com.example.spring_tp3.models.forms.UserConnectForm;
 import com.example.spring_tp3.models.forms.UserForm;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -46,18 +48,24 @@ public class UserController {
     }
 
     // --- UPDATE ---
+    @PreAuthorize("isAuthenticated()")
+    @RolesAllowed("ADMIN")
     @PutMapping("/update/{id}")
     public ResponseEntity<UserDTO> update(@RequestBody UserForm form, @PathVariable Long id){
         return ResponseEntity.ok(service.update(id, form));
     }
 
     // --- DELETE ---
+    @PreAuthorize("isAuthenticated()")
+    @RolesAllowed("ADMIN")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<UserDTO> delete(@PathVariable Long id){
         return ResponseEntity.ok(service.delete(id));
     }
 
     // --- ADD GAME TO FAVORITES ---
+    @PreAuthorize("isAuthenticated()")
+    @RolesAllowed("USER")
     @PatchMapping ("/update/{id}/fav/{idGame}")
     public ResponseEntity<UserDTO> addGameToFavorites(@PathVariable Long id, @PathVariable Long idGame){
         try{

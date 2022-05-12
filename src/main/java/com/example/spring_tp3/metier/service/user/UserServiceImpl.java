@@ -9,6 +9,9 @@ import com.example.spring_tp3.models.forms.UserConnectForm;
 import com.example.spring_tp3.models.forms.UserForm;
 import com.example.spring_tp3.repository.GameRepository;
 import com.example.spring_tp3.repository.UserRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +20,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -61,7 +64,7 @@ public class UserServiceImpl implements UserService{
         User entity = userRepository.findById(id)
                 .orElseThrow(() -> new ElementNotFoundException(id, Game.class));
         entity.setUsername(form.getUsername());
-        entity.setPassword(form.getPassword());
+        entity.setPassword(encoder.encode(form.getPassword()));
         entity.setEmail(form.getEmail());
         entity = userRepository.save(entity);
         return userMapper.entityToDTO(entity);
@@ -93,4 +96,11 @@ public class UserServiceImpl implements UserService{
         entity = userRepository.save(entity);
         return userMapper.entityToDTO(entity);
     }
+
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        return (UserDetails) userRepository.findByUsername(username)
+//                .map(UserDTO::of)
+//                .orElseThrow(() -> new UsernameNotFoundException("L'utilisateur n'existe pas"));
+//    }
 }

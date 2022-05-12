@@ -6,6 +6,7 @@ import com.example.spring_tp3.models.dtos.GameDTO;
 import com.example.spring_tp3.models.forms.GameForm;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,18 +42,21 @@ public class GameController {
     }
 
     // --- INSERT ---
+//    @PreAuthorize("isAuthenticated()")
     @PostMapping("/insert")
     public ResponseEntity<GameDTO> insert(@RequestBody GameForm form){
         return ResponseEntity.ok(service.insert(form));
     }
 
     // --- UPDATE ---
+//    @PreAuthorize("isAuthenticated()")
     @PutMapping("/update/{id}")
     public ResponseEntity<GameDTO> update(@RequestBody GameForm form, @PathVariable Long id){
         return ResponseEntity.ok(service.update(id, form));
     }
 
     // --- DELETE ---
+//    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<GameDTO> delete(@PathVariable Long id){
         return ResponseEntity.ok(service.delete(id));
@@ -60,12 +64,14 @@ public class GameController {
 
 
     // --- UPDATE DEVELOPER ---
+    @PreAuthorize("isAuthenticated()")
     @PutMapping("/updateDev/{id}/developer/{idDeveloper}")
     public ResponseEntity<GameDTO> updateDeveloper(@PathVariable Long id, @PathVariable Long idDeveloper){
         return ResponseEntity.ok(service.updateDeveloper(id, idDeveloper));
     }
 
     // --- UPDATE EDITOR ---
+    @PreAuthorize("isAuthenticated()")
     @PutMapping("/updateEdit/{id}/editor/{idEditor}")
     public ResponseEntity<GameDTO> updateEditor(@PathVariable Long id, @PathVariable Long idEditor){
         return ResponseEntity.ok(service.updateEditor(id, idEditor));
