@@ -20,6 +20,8 @@ public interface UserService {
 
     UserDTO getByUsername(UserConnectForm form);
 
+    UserDTO getByUsernameOnly(String username);
+
     UserDTO addGameToFavorites(Long id, Long idGame);
 
 }

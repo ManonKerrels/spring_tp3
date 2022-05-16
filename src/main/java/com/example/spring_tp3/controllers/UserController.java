@@ -3,6 +3,7 @@ package com.example.spring_tp3.controllers;
 import com.example.spring_tp3.exceptions.ElementNotFoundException;
 import com.example.spring_tp3.metier.service.LoginService;
 import com.example.spring_tp3.metier.service.user.UserService;
+import com.example.spring_tp3.models.dtos.JwtDTO;
 import com.example.spring_tp3.models.dtos.UserDTO;
 import com.example.spring_tp3.models.forms.UserConnectForm;
 import com.example.spring_tp3.models.forms.UserForm;
@@ -28,21 +29,23 @@ public class UserController {
 
     // --- GET ALL ---
     @GetMapping("")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public List<UserDTO> getAll(){
         return service.getAll();
     }
 
     // --- LOGIN ---
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserConnectForm form){
-        return ResponseEntity.ok(loginService.login(form));
+    public JwtDTO login(@RequestBody UserConnectForm form){
+        return loginService.login(form);
     }
 
     // --- GET ONE ---
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getOne(@PathVariable Long id){
+    @GetMapping(params = {"username"})
+//    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<UserDTO> getOne(@RequestParam String username){
         try {
-            UserDTO dto = service.getOne(id);
+            UserDTO dto = service.getByUsernameOnly(username);
             return ResponseEntity.ok(dto);
         } catch (ElementNotFoundException ex){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -56,8 +59,7 @@ public class UserController {
     }
 
     // --- UPDATE ---
-    @PreAuthorize("isAuthenticated()")
-    @RolesAllowed("ADMIN")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<UserDTO> update(@RequestBody UserForm form, @PathVariable Long id){
         return ResponseEntity.ok(service.update(id, form));
@@ -65,15 +67,14 @@ public class UserController {
 
     // --- DELETE ---
 //    @PreAuthorize("isAuthenticated()")
-    @RolesAllowed("ADMIN")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<UserDTO> delete(@PathVariable Long id){
         return ResponseEntity.ok(service.delete(id));
     }
 
     // --- ADD GAME TO FAVORITES ---
-    @PreAuthorize("isAuthenticated()")
-    @RolesAllowed("USER")
+    @PreAuthorize("hasAuthority('ADMIN', 'USER')")
     @PatchMapping ("/update/{id}/fav/{idGame}")
     public ResponseEntity<UserDTO> addGameToFavorites(@PathVariable Long id, @PathVariable Long idGame){
         try{

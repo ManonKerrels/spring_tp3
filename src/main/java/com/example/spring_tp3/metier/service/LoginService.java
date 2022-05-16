@@ -3,6 +3,7 @@ package com.example.spring_tp3.metier.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.spring_tp3.config.JWTProperties;
+import com.example.spring_tp3.models.dtos.JwtDTO;
 import com.example.spring_tp3.models.forms.UserConnectForm;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,11 +25,11 @@ public class LoginService {
         this.authenticationManager = authenticationManager;
     }
 
-    public String login(UserConnectForm form) {
+    public JwtDTO login(UserConnectForm form) {
         Authentication authentication = new UsernamePasswordAuthenticationToken(form.getUsername(), form.getPassword());
         authentication = authenticationManager.authenticate(authentication);
 
-        return JWT.create()
+        String jwt = JWT.create()
                 .withSubject(form.getUsername())
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + jwtProperties.getExpires()))
@@ -40,5 +41,9 @@ public class LoginService {
                                 .toList()
                 )
                 .sign(Algorithm.HMAC512(jwtProperties.getSecret()));
+        return JwtDTO.builder()
+                .username(form.getUsername())
+                .jwt(jwt)
+                .build();
     }
 }

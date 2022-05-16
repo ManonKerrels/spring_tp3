@@ -38,21 +38,21 @@ public class EditorController {
     }
 
     // --- INSERT ---
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/insert")
     public ResponseEntity<EditorDTO> insert(@RequestBody EditorForm form){
         return ResponseEntity.ok(service.insert(form));
     }
 
     // --- UPDATE ---
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<EditorDTO> update(@RequestBody EditorForm form, @PathVariable Long id){
         return ResponseEntity.ok(service.update(id, form));
     }
 
     // --- DELETE ---
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<EditorDTO> delete(@PathVariable Long id){
         return ResponseEntity.ok(service.delete(id));

@@ -10,6 +10,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -43,15 +44,15 @@ public class GameController {
     }
 
     // --- INSERT ---
-//    @PreAuthorize("isAuthenticated()")
     @PostMapping("/insert")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<GameDTO> insert(@RequestBody GameForm form){
         return ResponseEntity.ok(service.insert(form));
     }
 
     // --- UPDATE ---
-//    @PreAuthorize("isAuthenticated()")
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<GameDTO> update(@RequestBody GameForm form, @PathVariable Long id){
         return ResponseEntity.ok(service.update(id, form));
     }
@@ -65,14 +66,14 @@ public class GameController {
 
 
     // --- UPDATE DEVELOPER ---
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/updateDev/{id}/developer/{idDeveloper}")
     public ResponseEntity<GameDTO> updateDeveloper(@PathVariable Long id, @PathVariable Long idDeveloper){
         return ResponseEntity.ok(service.updateDeveloper(id, idDeveloper));
     }
 
     // --- UPDATE EDITOR ---
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/updateEdit/{id}/editor/{idEditor}")
     public ResponseEntity<GameDTO> updateEditor(@PathVariable Long id, @PathVariable Long idEditor){
         return ResponseEntity.ok(service.updateEditor(id, idEditor));

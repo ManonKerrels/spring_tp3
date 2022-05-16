@@ -94,6 +94,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public UserDTO getByUsernameOnly(String username) {
+        return userRepository.findByUsername(username)
+                .map(userMapper::entityToDTO)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    @Override
     public UserDTO addGameToFavorites(Long id, Long idGame){
         User entity = userRepository.findById(id)
                 .orElseThrow(() -> new ElementNotFoundException(id, Game.class));

@@ -38,6 +38,9 @@ public class UserServiceMock implements UserService{
     }
 
     @Override
+    public UserDTO getByUsernameOnly(String username) {return null;}
+
+    @Override
     public UserDTO addGameToFavorites(Long id, Long idGame) {
         return null;
     }

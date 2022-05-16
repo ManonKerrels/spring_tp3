@@ -37,21 +37,21 @@ public class DeveloperController {
     }
 
     // --- INSERT ---
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/insert")
     public ResponseEntity<DeveloperDTO> insert(@RequestBody DeveloperForm form){
         return ResponseEntity.ok(service.insert(form));
     }
 
     // --- UPDATE ---
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<DeveloperDTO> update(@RequestBody DeveloperForm form, @PathVariable Long id){
         return ResponseEntity.ok(service.update(id, form));
     }
 
     // --- DELETE ---
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<DeveloperDTO> delete(@PathVariable Long id){
         return ResponseEntity.ok(service.delete(id));
