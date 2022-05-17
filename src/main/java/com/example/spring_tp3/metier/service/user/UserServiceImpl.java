@@ -115,6 +115,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public UserDTO deleteGameFromFavorites(Long id, Long idGame){
+        User entity = userRepository.findById(id)
+                .orElseThrow(() -> new ElementNotFoundException(id, Game.class));
+        Game game = gameRepository.findById(idGame)
+                .orElseThrow(() -> new ElementNotFoundException(idGame, Game.class));
+        entity.getGames().remove(game);
+        entity = userRepository.save(entity);
+        return userMapper.entityToDTO(entity);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username).orElseThrow(() -> new ElementNotFoundException(username, User.class));
     }

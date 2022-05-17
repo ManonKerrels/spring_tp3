@@ -71,12 +71,22 @@ public class UserController {
     }
 
 
-    // --- ADD GAME TO FAVORITES ---
+    // --- LIST OF FAVORITES ---
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     @PatchMapping ("/update/{id}/fav/{idGame}")
     public ResponseEntity<UserDTO> addGameToFavorites(@PathVariable Long id, @PathVariable Long idGame){
         try{
             return ResponseEntity.ok(service.addGameToFavorites(id, idGame));
+        } catch (ElementNotFoundException ex){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    @PatchMapping("/update/{id}/delete/{idGame}")
+    public ResponseEntity<UserDTO> deleteGameFromFavorites(@PathVariable Long id, @PathVariable Long idGame){
+        try{
+            return ResponseEntity.ok(service.deleteGameFromFavorites(id, idGame));
         } catch (ElementNotFoundException ex){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
