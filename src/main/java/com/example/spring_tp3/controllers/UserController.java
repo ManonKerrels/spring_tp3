@@ -28,7 +28,6 @@ public class UserController {
 
     // --- GET ALL ---
     @GetMapping("")
-//    @PreAuthorize("hasAuthority('ADMIN')")
     public List<UserDTO> getAll(){
         return service.getAll();
     }
@@ -41,7 +40,6 @@ public class UserController {
 
     // --- GET ONE ---
     @GetMapping(params = {"username"})
-//    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<UserDTO> getOne(@RequestParam String username){
         try {
             UserDTO dto = service.getByUsernameOnly(username);

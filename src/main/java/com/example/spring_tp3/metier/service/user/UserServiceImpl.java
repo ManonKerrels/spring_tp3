@@ -45,6 +45,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserDTO insert(UserForm form) {
         User entity = userMapper.formToEntity(form);
         encoder.encode(form.getPassword());
+        entity.setRoles(List.of("USER"));
         entity.setNotLocked(true);
         entity = userRepository.save(entity);
         return userMapper.entityToDTO(entity);
