@@ -6,11 +6,9 @@ import com.example.spring_tp3.models.dtos.GameDTO;
 import com.example.spring_tp3.models.forms.GameForm;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -58,23 +56,23 @@ public class GameController {
     }
 
     // --- DELETE ---
-    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<GameDTO> delete(@PathVariable Long id){
         return ResponseEntity.ok(service.delete(id));
     }
 
 
     // --- UPDATE DEVELOPER ---
-    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/updateDev/{id}/developer/{idDeveloper}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<GameDTO> updateDeveloper(@PathVariable Long id, @PathVariable Long idDeveloper){
         return ResponseEntity.ok(service.updateDeveloper(id, idDeveloper));
     }
 
     // --- UPDATE EDITOR ---
-    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/updateEdit/{id}/editor/{idEditor}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<GameDTO> updateEditor(@PathVariable Long id, @PathVariable Long idEditor){
         return ResponseEntity.ok(service.updateEditor(id, idEditor));
     }
