@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -29,7 +28,6 @@ public class UserController {
 
     // --- GET ALL ---
     @GetMapping("")
-//    @PreAuthorize("hasAuthority('ADMIN')")
     public List<UserDTO> getAll(){
         return service.getAll();
     }
@@ -42,7 +40,6 @@ public class UserController {
 
     // --- GET ONE ---
     @GetMapping(params = {"username"})
-//    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<UserDTO> getOne(@RequestParam String username){
         try {
             UserDTO dto = service.getByUsernameOnly(username);
@@ -73,12 +70,23 @@ public class UserController {
         return ResponseEntity.ok(service.delete(id));
     }
 
-    // --- ADD GAME TO FAVORITES ---
-    @PreAuthorize("hasAuthority('ADMIN', 'USER')")
+
+    // --- LIST OF FAVORITES ---
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     @PatchMapping ("/update/{id}/fav/{idGame}")
     public ResponseEntity<UserDTO> addGameToFavorites(@PathVariable Long id, @PathVariable Long idGame){
         try{
             return ResponseEntity.ok(service.addGameToFavorites(id, idGame));
+        } catch (ElementNotFoundException ex){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    @PatchMapping("/update/{id}/delete/{idGame}")
+    public ResponseEntity<UserDTO> deleteGameFromFavorites(@PathVariable Long id, @PathVariable Long idGame){
+        try{
+            return ResponseEntity.ok(service.deleteGameFromFavorites(id, idGame));
         } catch (ElementNotFoundException ex){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

@@ -45,4 +45,7 @@ public class UserServiceMock implements UserService{
         return null;
     }
 
+    @Override
+    public UserDTO deleteGameFromFavorites(Long id, Long idGame) { return null; }
+
 }

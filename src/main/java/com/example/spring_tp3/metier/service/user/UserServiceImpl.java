@@ -44,7 +44,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserDTO insert(UserForm form) {
         User entity = userMapper.formToEntity(form);
-        encoder.encode(form.getPassword());
+        entity.setUsername(form.getUsername());
+        entity.setPassword(encoder.encode(form.getPassword()));
+        entity.setEmail(form.getEmail());
+        entity.setRoles(List.of("USER"));
         entity.setNotLocked(true);
         entity = userRepository.save(entity);
         return userMapper.entityToDTO(entity);
@@ -107,6 +110,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Game game = gameRepository.findById(idGame)
                 .orElseThrow(() -> new ElementNotFoundException(idGame, Game.class));
         entity.getGames().add(game);
+        entity = userRepository.save(entity);
+        return userMapper.entityToDTO(entity);
+    }
+
+    @Override
+    public UserDTO deleteGameFromFavorites(Long id, Long idGame){
+        User entity = userRepository.findById(id)
+                .orElseThrow(() -> new ElementNotFoundException(id, Game.class));
+        Game game = gameRepository.findById(idGame)
+                .orElseThrow(() -> new ElementNotFoundException(idGame, Game.class));
+        entity.getGames().remove(game);
         entity = userRepository.save(entity);
         return userMapper.entityToDTO(entity);
     }
