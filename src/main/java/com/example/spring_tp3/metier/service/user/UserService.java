@@ -26,4 +26,5 @@ public interface UserService {
 
     UserDTO deleteGameFromFavorites(Long id, Long idGame);
 
+
 }
