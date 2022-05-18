@@ -104,11 +104,93 @@ public class DatabaseFiller implements InitializingBean {
                 .build();
         developerRepository.save(d);
 
+        e = Editor.builder()
+                .name("Capcom")
+                .parentCompany("Osaka (Japan)")
+                .creationDate(LocalDate.of(1979, 5, 30))
+                .games(null)
+                .build();
+        editorRepository.save(e);
+
+        g = Game.builder()
+                .title("Resident Evil")
+                .releaseDate(LocalDate.of(1996, 03, 22))
+                .genre("survival horror")
+                .portage("Playstation, Saturn, PC")
+                .getLicence(true)
+                .developer(d)
+                .editor(e)
+                .build();
+        gameRepository.save(g);
+
+        e = Editor.builder()
+                .name("Ubisoft")
+                .parentCompany("Montréal (Canada)")
+                .creationDate(LocalDate.of(1986, 01, 01))
+                .games(null)
+                .build();
+        editorRepository.save(e);
+
+        d = Developer.builder()
+                .name("Ubisoft Montréal")
+                .parentCompany("Montréal (Canada)")
+                .creationDate(LocalDate.of(1986, 01, 01))
+                .games(null)
+                .build();
+        developerRepository.save(d);
+
+        g = Game.builder()
+                .title("Assassin's Creed")
+                .releaseDate(LocalDate.of(2077, 11, 13))
+                .genre("RPG, aventure")
+                .portage("PS3, XB360")
+                .getLicence(true)
+                .developer(d)
+                .editor(e)
+                .build();
+        gameRepository.save(g);
+
+        e = Editor.builder()
+                .name("Square Enix")
+                .parentCompany("Tokyo (Japan)")
+                .creationDate(LocalDate.of(1975, 9, 22))
+                .games(null)
+                .build();
+        editorRepository.save(e);
+
+        d = Developer.builder()
+                .name("Dontnod Entertainment")
+                .parentCompany("Paris (France)")
+                .creationDate(LocalDate.of(2088, 05, 01))
+                .games(null)
+                .build();
+        developerRepository.save(d);
+
+        g = Game.builder()
+                .title("Life is strange")
+                .releaseDate(LocalDate.of(2015, 01, 30))
+                .genre("Aventure, Point-and-click")
+                .portage("PC, PS3, XBOX360")
+                .getLicence(true)
+                .developer(d)
+                .editor(e)
+                .build();
+        gameRepository.save(g);
+
         User u = User.builder()
                 .username("manon")
                 .password(encoder.encode("pass"))
                 .email("manon@mail.com")
                 .roles(List.of("USER", "ADMIN"))
+                .isNotLocked(true)
+                .build();
+        userRepository.save(u);
+
+        u = User.builder()
+                .username("cassian")
+                .password(encoder.encode("chat"))
+                .email("cassian@mail.com")
+                .roles(List.of("USER"))
                 .isNotLocked(true)
                 .build();
         userRepository.save(u);
